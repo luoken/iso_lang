@@ -27,14 +27,4 @@ defmodule IsoLang.Data do
   def all(_opts) do
     unquote(Macro.escape(langs))
   end
-
-  @spec find(lang_code :: String.t(), opts :: Keyword.t()) :: IsoLang.t()
-  def find(lang_code, opts \\ [])
-
-  def find("", _opts), do: nil
-
-  def find(lang_code, opts) do
-    standard = Keyword.get(opts, :standard, nil)
-    Enum.find(all(opts), fn x -> Map.get(x, standard, nil) == lang_code end)
-  end
 end
