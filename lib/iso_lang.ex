@@ -83,7 +83,12 @@ defmodule IsoLang do
 
   ## Examples
 
-      iex> IsoLang.find(~r/eng/)
+      iex> IsoLang.find("eng")
+      {:ok,
+        [
+          %IsoLang{alpha2: "bn", alpha3b: "ben", alpha3t: "", name: "Bengali"},
+          %IsoLang{alpha2: "en", alpha3b: "eng", alpha3t: "", name: "English"}
+        ]}
   """
   @spec find(query :: String.t(), opts :: Keyword.t()) :: {:ok, [IsoLang.t()]} | {:error, any()}
   def find(query, opts \\ []) do
