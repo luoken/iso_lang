@@ -1,7 +1,5 @@
 defmodule IsoLang do
   @moduledoc """
-  Documentation for `IsoLang`.
-
   Provides utilities for dealing with [ISO 639](https://en.wikipedia.org/wiki/ISO_639)
   languages.
 
@@ -116,6 +114,113 @@ defmodule IsoLang do
     case find(query, opts) do
       {:ok, lang} -> {:ok, lang}
       {:error, error} -> raise error
+    end
+  end
+
+  @doc """
+  Checks if query is valid against the standard provided. This query is case-sensitive.
+  If the `:by` field is not specified, the default will be used.
+
+  ## Options
+
+  - `:by` specifies which struct field to be used in the search. Default: `:alpha2`
+
+  ## Examples
+
+      iex> IsoLang.valid?("en")
+      true
+
+      iex> IsoLang.valid?("en", by: :alpha3b)
+      false
+
+      iex> IsoLang.valid?("eng", by: :alpha3b)
+      true
+  """
+
+  @spec valid?(query :: String.t(), opts :: Keyword.t()) :: true | false
+  def valid?(query, opts \\ []) do
+    opts =
+      opts
+      |> Keyword.merge(by: Keyword.get(opts, :by, :alpha2))
+
+    query
+    |> get(opts)
+    |> case do
+      {:ok, _} -> true
+      _ -> false
+    end
+  end
+
+  @doc """
+  Converts from name to provided ISO-639 standard
+  If the `:by` field is not specified, fields are checked in the following order:
+
+  - `:alpha2`
+  - `:alpha3b`
+  - `:alpha3t`
+  - `:name`
+
+  ## Options
+
+  - `:by` specifies which struct field to be used in the search. (optional)
+
+  ## Examples
+
+      iex> IsoLang.code("en")
+      {:error, "Language not found"}
+
+      iex> IsoLang.code("Korean")
+      {:ok, "ko"}
+
+      iex> IsoLang.code("Korean", by: :alpha3b)
+      {:ok, "kor"}
+
+      iex> IsoLang.code("Korean", by: :alpha3t)
+      {:ok, ""}
+  """
+  @spec code(query :: String.t(), opts :: Keyword.t()) :: {:ok, String.t()} | {:error, any()}
+  def code(query, opts \\ []) do
+    key = Keyword.get(opts, :by, :alpha2)
+
+    query
+    |> get(opts |> Keyword.put(:by, :name))
+    |> case do
+      {:ok, record} -> {:ok, Map.fetch!(record, key)}
+      {:error, error} -> {:error, error}
+    end
+  end
+
+  @doc """
+  Converts from a query along with the standard to a name.
+  If the `:by` field is not specified, fields are checked in the following order:
+
+  - `:alpha2`
+  - `:alpha3b`
+  - `:alpha3t`
+  - `:name`
+
+  ## Options
+
+  - `:by` specifies which struct field to be used in the search. (optional)
+
+  ## Examples
+
+      iex> IsoLang.name("eng", by: :alpha3b)
+      {:ok, "English"}
+
+      iex> IsoLang.name("ko")
+      {:ok, "Korean"}
+
+      iex> IsoLang.name("bena")
+      {:error, "Language not found"}
+  """
+  @spec name(query :: String.t(), opts :: Keyword.t()) :: {:ok, String.t()} | {:error, any()}
+  def name(query, opts \\ []) do
+    query
+    |> get(opts)
+    |> case do
+      {:ok, record} -> {:ok, Map.fetch!(record, :name)}
+      {:error, error} -> {:error, error}
     end
   end
 end
