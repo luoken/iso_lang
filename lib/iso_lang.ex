@@ -12,14 +12,17 @@ defmodule IsoLang do
   - https://datahub.io/core/language-codes#resource-language-codes-full
   """
 
+  use Gettext, otp_app: :iso_lang
+
   @type t :: %__MODULE__{
           alpha2: String.t(),
           alpha3b: String.t(),
           alpha3t: String.t(),
-          name: String.t()
+          name: String.t(),
+          native_name: String.t()
         }
 
-  defstruct alpha2: nil, alpha3b: nil, alpha3t: nil, name: nil
+  defstruct alpha2: nil, alpha3b: nil, alpha3t: nil, name: nil, native_name: nil
 
   @doc """
   Returns a list of all available ISO language codes.
