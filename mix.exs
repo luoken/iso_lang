@@ -1,7 +1,7 @@
 defmodule IsoLang.MixProject do
   use Mix.Project
 
-  @version "0.2.0"
+  @version "0.1.0"
 
   def project do
     [
@@ -11,6 +11,8 @@ defmodule IsoLang.MixProject do
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps(),
+      description: "Converts from between ISO-639 standard to human readable names to native names",
+      package: package(),
       elixirc_paths: elixirc_paths(Mix.env()),
       elixirc_options: [
         warnings_as_errors: true
@@ -57,4 +59,12 @@ defmodule IsoLang.MixProject do
 
   defp elixirc_paths(:test), do: ["lib", "test/support"]
   defp elixirc_paths(_), do: ["lib"]
+
+  defp package do
+    [
+      maintainers: ["Everett Griffiths", "Ken Luo"],
+      licenses: ["MIT"],
+      links: %{"GitHub" => "https://github.com/luoken/iso_lang"}
+    ]
+  end
 end
