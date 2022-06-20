@@ -72,7 +72,7 @@ defmodule IsoLang do
   """
   def get!(query, opts \\ []) do
     case get(query, opts) do
-      {:ok, lang} -> {:ok, lang}
+      {:ok, lang} -> lang
       {:error, error} -> raise error
     end
   end
@@ -117,7 +117,7 @@ defmodule IsoLang do
   """
   def find!(query, opts \\ []) do
     case find(query, opts) do
-      {:ok, lang} -> {:ok, lang}
+      {:ok, lang} -> lang
       {:error, error} -> raise error
     end
   end
