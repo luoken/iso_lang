@@ -1,7 +1,7 @@
 defmodule IsoLang.MixProject do
   use Mix.Project
 
-  @version "0.1.0"
+  @version "0.1.1"
 
   def project do
     [
@@ -11,7 +11,7 @@ defmodule IsoLang.MixProject do
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps(),
-      description: "Converts from between ISO-639 standard to human readable names to native names",
+      description: "Formalizes interface for ISO-639 language codes and assists with conversion",
       package: package(),
       elixirc_paths: elixirc_paths(Mix.env()),
       elixirc_options: [
