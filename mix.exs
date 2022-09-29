@@ -1,7 +1,7 @@
 defmodule IsoLang.MixProject do
   use Mix.Project
 
-  @version "0.1.1"
+  @version "0.2.0"
 
   def project do
     [
@@ -53,7 +53,7 @@ defmodule IsoLang.MixProject do
       {:dialyxir, "~> 1.1", only: [:dev], runtime: false},
       {:ex_doc, "~> 0.28", only: [:dev, :test], runtime: false},
       {:excoveralls, "~> 0.14", only: [:dev, :test], runtime: false},
-      {:gettext, "~> 0.19.1"}
+      {:gettext, ">= 0.19.1"}
     ]
   end
 
