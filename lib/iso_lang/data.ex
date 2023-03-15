@@ -3,7 +3,7 @@ defmodule IsoLang.Data do
   Builds list of language codes at compile-time.
 
   Data sourced from https://datahub.io/core/language-codes#resource-language-codes-full
-  Native language names adapted from # https://github.com/meikidd/iso-639-1/blob/master/src/data.js
+  Native language names adapted from https://github.com/meikidd/iso-639-1/blob/master/src/data.js
   """
 
   native_names = %{
