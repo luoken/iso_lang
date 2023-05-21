@@ -1,11 +1,10 @@
 defmodule IsoLang.Data do
-  @moduledoc """
-  Builds list of language codes at compile-time.
-
-  Data sourced from https://datahub.io/core/language-codes#resource-language-codes-full
-  Native language names adapted from https://github.com/meikidd/iso-639-1/blob/master/src/data.js
-  """
-
+  @moduledoc false
+  # Builds list of language codes at compile-time.
+  #
+  # Data sourced from https://datahub.io/core/language-codes#resource-language-codes-full
+  # Native language names adapted from https://github.com/meikidd/iso-639-1/blob/master/src/data.js
+  #
   # External resource used by this module
   # https://hexdocs.pm/elixir/Module.html#module-external_resource
   @external_resource Application.app_dir(:iso_lang, ["priv", "language-codes-full.csv"])
@@ -223,7 +222,7 @@ defmodule IsoLang.Data do
         alpha2: alpha2,
         alpha3b: alpha3b,
         alpha3t: alpha3t,
-        name: Gettext.gettext(IsoLang, f.(tail)),
+        name: Gettext.gettext(IsoLang.Backend, f.(tail)),
         native_name: Map.get(native_names, alpha2)
       }
     end)

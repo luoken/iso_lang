@@ -11,9 +11,6 @@ defmodule IsoLang do
   - https://tools.ietf.org/search/bcp47
   - https://datahub.io/core/language-codes#resource-language-codes-full
   """
-
-  use Gettext, otp_app: :iso_lang
-
   @type t :: %__MODULE__{
           alpha2: String.t(),
           alpha3b: String.t(),
@@ -24,10 +21,17 @@ defmodule IsoLang do
 
   defstruct alpha2: nil, alpha3b: nil, alpha3t: nil, name: nil, native_name: nil
 
+  defmodule Backend do
+    @moduledoc false
+    # We rely on a dedicated "private" module as the Gettext backend so we don't
+    # pollute the IsoLang docs with all the generated Gettext functions
+    use Gettext, otp_app: :iso_lang
+  end
+
   @doc """
   Returns a list of all available ISO language codes.
   """
-  defdelegate all(opts \\ []), to: IsoLang.Data
+  def all(opts \\ []), do: IsoLang.Data.all(opts)
 
   @doc """
   Gets a single language struct identified by a field.
