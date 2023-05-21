@@ -2,7 +2,7 @@ defmodule IsoLang.MixProject do
   use Mix.Project
 
   @source_url "https://github.com/luoken/iso_lang"
-  @version "0.3.1"
+  @version "0.4.0"
 
   def project do
     [
@@ -12,7 +12,8 @@ defmodule IsoLang.MixProject do
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps(),
-      description: "Formalizes interface for ISO-639 language codes and assists with conversion",
+      description:
+        "Formalizes interface for ISO-639 language codes and assists with language-code conversion",
       package: package(),
       elixirc_paths: elixirc_paths(Mix.env()),
       elixirc_options: [
@@ -35,7 +36,8 @@ defmodule IsoLang.MixProject do
         main: "readme",
         source_ref: "v#{@version}",
         source_url: @source_url,
-        extras: extras()
+        extras: extras(),
+        skip_undefined_reference_warnings_on: ["CHANGELOG.md"]
       ]
     ]
   end
