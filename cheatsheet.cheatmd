@@ -1,0 +1,81 @@
+# IsoLang Cheatsheet
+
+Quick reference for using `IsoLang`.
+
+## Lookup a Single Language
+
+Specify `:alpha2` if you want to lookup by the 2-character code:
+
+```elixir
+iex> IsoLang.get("de", by: :alpha2)
+{:ok,
+ %IsoLang{
+   alpha2: "de",
+   alpha3b: "ger",
+   alpha3t: "deu",
+   name: "German",
+   native_name: "Deutsch"
+ }}
+```
+
+Specify `:alpha3b` if you want to lookup a language by the "common" 3-character code:
+
+```elixir
+iex> IsoLang.get("eng", by: :alpha3b)
+{:ok,
+ %IsoLang{
+   alpha2: "en",
+   alpha3b: "eng",
+   alpha3t: "",
+   name: "English",
+   native_name: "English"
+ }}
+```
+
+Some languages are also identified by an `:alpha3t` 3-character code, but these are somewhat rare.
+
+## Search Languages
+
+If you don't have a unique identifier, use `IsoLang.find/2`.  By default, the field to be searched will be the `:name` field.  This will perform a case-insensitive search of all available languages.
+
+```elixir
+iex> IsoLang.find("eng", by: :name)
+{:ok,
+ [
+   %IsoLang{
+     alpha2: "",
+     alpha3b: "ang",
+     alpha3t: "",
+     name: "English, Old (ca.450-1100)",
+     native_name: nil
+   },
+   %IsoLang{
+     alpha2: "bn",
+     alpha3b: "ben",
+     alpha3t: "",
+     name: "Bengali",
+     native_name: "বাংলা"
+   },
+   %IsoLang{
+     alpha2: "",
+     alpha3b: "cpe",
+     alpha3t: "",
+     name: "Creoles and pidgins, English based",
+     native_name: nil
+   },
+   %IsoLang{
+     alpha2: "en",
+     alpha3b: "eng",
+     alpha3t: "",
+     name: "English",
+     native_name: "English"
+   },
+   %IsoLang{
+     alpha2: "",
+     alpha3b: "enm",
+     alpha3t: "",
+     name: "English, Middle (1100-1500)",
+     native_name: nil
+   }
+ ]}
+ ```

@@ -38,14 +38,26 @@ defmodule IsoLang do
   - `:alpha3t`
   - `:name`
 
+  Keep in mind that the `:alpha2` (2-character codes) and `:alpha3b` (3-character codes)
+  are the most common -- not every language defines a `:alpha3t` code.
+
   ## Options
 
-  - `:by` specifies which struct field to be used in the search. (optional)
+  - `:by` specifies which struct field to be used in the search. One of
+    `:alpha2`, `:alpha3b`, `:alpha3t`, `:name`. (optional; default will examine all
+    fields for a match in the order indicated above)
 
   ## Examples
 
       iex> IsoLang.get("de")
-      {:ok, %IsoLang{alpha2: "de", alpha3b: "ger", alpha3t: "deu", name: "German"}}
+      {:ok,
+        %IsoLang{
+          alpha2: "de",
+          alpha3b: "ger",
+          alpha3t: "deu",
+          name: "German",
+          native_name: "Deutsch"
+        }}
   """
   @spec get(value :: String.t(), opts :: Keyword.t()) :: {:ok, IsoLang.t()} | {:error, any()}
   def get(value, opts \\ []) do
@@ -82,16 +94,31 @@ defmodule IsoLang do
 
   ## Options
 
-  - `:by` specifies which struct field to be used in the search. Default: `:name`
+  - `:by` specifies which struct field to be used in the search. One of
+    `:alpha2`, `:alpha3b`, `:alpha3t`, `:name`. Default: `:name`
 
   ## Examples
 
       iex> IsoLang.find("eng")
       {:ok,
         [
-          %IsoLang{alpha2: "bn", alpha3b: "ben", alpha3t: "", name: "Bengali"},
-          %IsoLang{alpha2: "en", alpha3b: "eng", alpha3t: "", name: "English"}
-        ]}
+          %IsoLang{
+            alpha2: "",
+            alpha3b: "ang",
+            alpha3t: "",
+            name: "English, Old (ca.450-1100)",
+            native_name: nil
+          },
+          %IsoLang{
+            alpha2: "bn",
+            alpha3b: "ben",
+            alpha3t: "",
+            name: "Bengali",
+            native_name: "বাংলা"
+          },
+          # ... etc...
+        ]
+      }
   """
   @spec find(query :: String.t(), opts :: Keyword.t()) :: {:ok, [IsoLang.t()]} | {:error, any()}
   def find(query, opts \\ []) do

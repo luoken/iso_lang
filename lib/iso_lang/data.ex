@@ -6,6 +6,10 @@ defmodule IsoLang.Data do
   Native language names adapted from https://github.com/meikidd/iso-639-1/blob/master/src/data.js
   """
 
+  # External resource used by this module
+  # https://hexdocs.pm/elixir/Module.html#module-external_resource
+  @external_resource Application.app_dir(:iso_lang, ["priv", "language-codes-full.csv"])
+
   native_names = %{
     "aa" => "Afaraf",
     "ab" => "аҧсуа бызшәа",
@@ -193,7 +197,8 @@ defmodule IsoLang.Data do
   }
 
   lines =
-    File.stream!("priv/language-codes-full.csv")
+    @external_resource
+    |> File.stream!()
     |> Stream.drop(1)
 
   langs =

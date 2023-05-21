@@ -1,7 +1,8 @@
 defmodule IsoLang.MixProject do
   use Mix.Project
 
-  @version "0.3.0"
+  @source_url "https://github.com/luoken/iso_lang"
+  @version "0.3.1"
 
   def project do
     [
@@ -29,6 +30,12 @@ defmodule IsoLang.MixProject do
         "local.rebar": :prod,
         "deps.get": :prod,
         test_reset: :test
+      ],
+      docs: [
+        main: "readme",
+        source_ref: "v#{@version}",
+        source_url: @source_url,
+        extras: extras()
       ]
     ]
   end
@@ -49,10 +56,10 @@ defmodule IsoLang.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
-      {:dialyxir, "~> 1.1", only: [:dev], runtime: false},
-      {:ex_doc, "~> 0.28", only: [:dev, :test], runtime: false},
-      {:excoveralls, "~> 0.14", only: [:dev, :test], runtime: false},
+      {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
+      {:dialyxir, "~> 1.3", only: [:dev], runtime: false},
+      {:ex_doc, "~> 0.29", only: [:dev, :test], runtime: false},
+      {:excoveralls, "~> 0.16", only: [:dev, :test], runtime: false},
       {:gettext, ">= 0.19.1"}
     ]
   end
@@ -65,6 +72,14 @@ defmodule IsoLang.MixProject do
       maintainers: ["Everett Griffiths", "Ken Luo"],
       licenses: ["MIT"],
       links: %{"GitHub" => "https://github.com/luoken/iso_lang"}
+    ]
+  end
+
+  def extras do
+    [
+      "README.md",
+      "cheatsheet.cheatmd",
+      "CHANGELOG.md"
     ]
   end
 end
